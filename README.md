@@ -1,14 +1,14 @@
 <!-- badges: start -->
-[![build](https://github.com/JGCRI/rtemplate/workflows/build/badge.svg)](https://github.com/JGCRI/rtemplate/workflows/build/badge.svg?branch=main)
-[![test_coverage](https://github.com/JGCRI/rtemplate/actions/workflows/test_coverage.yml/badge.svg?branch=main)](https://github.com/JGCRI/rtemplate/actions/workflows/test_coverage.yml)
-[![codecov](https://codecov.io/gh/JGCRI/rtemplate/branch/main/graph/badge.svg?token=XQ913U4IYM)](https://codecov.io/gh/JGCRI/rtemplate)
-[![docs](https://github.com/JGCRI/rtemplate/actions/workflows/docs.yaml/badge.svg?branch=main)](https://github.com/JGCRI/rtemplate/actions/workflows/docs.yaml)
+[![build](https://docs.google.com/spreadsheets/d/17eLM5bti6kzKaGLi63bgpadkIGfhVUsE7oWLK9kelOY/edit#gid=887696545)
+[![test_coverage]( )
+[![codecov]( )
+[![docs](https://docs.google.com/document/d/1cCqcxiIwHWoFEaa7Sd2j2LgkEAEfjByn/edit?rtpof=true)
 <!-- badges: end -->
 
 
 # Introduction
 
-`rtemplate` is a template for creating a basic R package with Continuous Integration (CI) via GitHub actions in the following steps:
+`gcamjobs` is a package for calculating the potential or ability of the job market to provide opportunities for employment in environmentally friendly or sustainable industries and practices in the following steps:
 
 <br>
 <br>
@@ -30,12 +30,10 @@ The folder structure is as shown below:
 
 # 1 Clone or "Use this template"
 
-Navigate directly to https://github.com/JGCRI/rtemplate, click the shiny green button that says `Use this template` and be on your way.
-
-You can also clone the template to view the files locally and then copy into your own repo as needed:
+clone the template to view the files locally and then copy into your own repo as needed:
 
 ```bash
-git clone https://github.com/JGCRI/rtemplate.git
+git clone https://github.com/umd-cgs/gcamjobs.git
 ```
 
 # 2 Update Package Information
