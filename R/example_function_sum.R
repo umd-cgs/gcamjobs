@@ -9,8 +9,8 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' library(rtemplate)
-#' rtemplate(1,1)
+#' library(gcamjobs)
+#' gcamjobs::example_function_sum(1,1)
 #' }
 
 example_function_sum <- function(a= NULL,

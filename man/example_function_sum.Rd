@@ -19,8 +19,8 @@ Function that sums two numbers
 }
 \examples{
 \dontrun{
-library(rtemplate)
-rtemplate(1,1)
+library(gcamjobs)
+gcamjobs::example_function_sum(1,1)
 }
 }
 \keyword{sum}
