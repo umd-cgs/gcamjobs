@@ -4,12 +4,14 @@
 \alias{capacity}
 \title{capacity}
 \usage{
-capacity(fig_dir = NULL, prj_data = NULL)
+capacity(fig_dir = NULL, prj_data = NULL, input_dir = getwd())
 }
 \arguments{
 \item{fig_dir}{Default = NULL, Output folder for figures and maps.}
 
 \item{prj_data}{Default = NULL, Gcam output data in "dat" format.}
+
+\item{input_dir}{Default = getwd(),output direction}
 }
 \value{
 number

@@ -4,6 +4,7 @@
 #'
 #' @param fig_dir Default = NULL, Output folder for figures and maps.
 #' @param prj_data Default = NULL, Gcam output data in "dat" format.
+#' @param input_dir Default = getwd(),output direction
 #' @keywords sum
 #' @return number
 #' @export
@@ -14,7 +15,8 @@
 #' }
 
 capacity <- function(fig_dir = NULL,
-                     prj_data = NULL) {
+                     prj_data = NULL,
+                     input_dir = getwd()) {
   #.........................
   # Initialize
   #.........................
@@ -28,14 +30,21 @@ capacity <- function(fig_dir = NULL,
   output = NULL
 
   rlang::inform("reading prj...")
-  prj <- rgcam::loadProject(paste0(out_dir, "/", prj_data))
-  scenarios <- listScenarios (prj)
-  scenarios
-  listQueries(prj)
+  prj <- rgcam::loadProject(paste0(input_dir, "/", prj_data))
+  scenarios <- rgcam::listScenarios (prj)
+  queries = rgcam::listQueries(prj)
+
+  #.........................
+  # Saving outputs
+  #.........................
+  output = list(scenarios=scenarios,
+                queries = queries)
+
 
   #.........................
   # Close out
   #.........................
+
 
   rlang::inform("capacity complete.")
 
