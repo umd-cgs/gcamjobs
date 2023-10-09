@@ -50,20 +50,20 @@ capacity <- function(fig_dir = NULL,
   #.........................
 
   # # process IRENA data
-  # IRENA_capacity %>%
-  #   select(Country, ISO.Code, Group.Technology, Technology, Poducer.Type, Year, Electricity.Installed.Capacity..MW.) %>%
-  #   rename(MW = "Electricity.Installed.Capacity..MW.") %>%
-  #   filter(Group.Technology %in% c("Solar energy", "Wind energy"), Year == 2020) %>%
-  #   mutate(ISO.Code = tolower(ISO.Code),
-  #          ISO.Code = gsub("rou", "rom", ISO.Code),
-  #          ISO.Code = gsub("xkx", "scg", ISO.Code),
-  #          ISO.Code = gsub("bes", "ant", ISO.Code),
-  #          value = MW,
-  #          value =as.numeric(gsub(",", "", value))) %>%
-  #   rename(year = Year) %>%
-  #   left_join(gcam_region_id, by = c("ISO.Code" = "iso")) %>%
-  #   left_join(gcam_region_name, by = "GCAM_region_ID") %>%
-  #   filter(!is.na(region)) -> IRENA_capacity_clean
+  gcamjobs::IRENA_capacity %>%
+    select(Country, `ISO Code`, Group.Technology, Technology, Poducer.Type, Year, Electricity.Installed.Capacity..MW.) %>%
+    rename(MW = "Electricity.Installed.Capacity..MW.") %>%
+    filter(Group.Technology %in% c("Solar energy", "Wind energy"), Year == 2020) %>%
+    mutate(`ISO Code` = tolower(ISO.Code),
+           `ISO Code` = gsub("rou", "rom", ISO.Code),
+           `ISO Code`= gsub("xkx", "scg", ISO.Code),
+           `ISO Code` = gsub("bes", "ant", ISO.Code),
+           value = MW,
+           value =as.numeric(gsub(",", "", value))) %>%
+    rename(year = Year) %>%
+    left_join(gcam_region_id, by = c("`ISO Code`" = "iso")) %>%
+    left_join(gcam_region_name, by = "GCAM_region_ID") %>%
+    filter(!is.na(region)) -> IRENA_capacity_clean
   #
   #
   # IRENA_capacity_clean %>%
