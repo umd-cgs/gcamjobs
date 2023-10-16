@@ -1,5 +1,6 @@
 library(gcamjobs)
 library(rgcam)
+library(dplyr)
 #testing funcation capacity
 input_dir_i = "//Users/Zt/Desktop/CGS_BRI/Repo/output/"
 prj_data_i = "GCAM_1.5_12_12.dat"

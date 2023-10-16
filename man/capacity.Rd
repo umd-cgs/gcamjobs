@@ -34,5 +34,6 @@ Function that sums two numbers
 library(gcamjobs)
 gcamjobs::capacity (1,1)
 }
+
 }
 \keyword{sum}
