@@ -53,7 +53,7 @@ capacity <- function(fig_dir = NULL,
 
   # # process IRENA data
   gcamjobs::IRENA_capacity %>%
-    select(Country, ISO.Code, Group.Technology, Technology, Poducer.Type, Year, Electricity.Installed.Capacity..MW.) %>%
+    select(Country, ISO.Code, Group.Technology, Technology, Producer.Type, Year, Electricity.Installed.Capacity..MW.) %>%
     rename(MW = "Electricity.Installed.Capacity..MW.") %>%
     filter(Group.Technology %in% c("Solar energy", "Wind energy"), Year == 2020) %>%
     mutate(ISO.Code = tolower(ISO.Code),

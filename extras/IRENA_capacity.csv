@@ -1,4 +1,4 @@
-﻿Region,Country,ISO.Code,RE.or.Non.RE,Group.Technology,Technology,oducer.Type,Year,Electricity.Installed.Capacity..MW.
+﻿Region,Country,ISO.Code,RE.or.Non.RE,Group.Technology,Technology,Producer.Type,Year,Electricity.Installed.Capacity..MW.
 Africa,Algeria,DZA,Total Non-Renewable,Fossil fuels,Fossil fuels,On-grid,2016,"18,597"
 Africa,Algeria,DZA,Total Non-Renewable,Fossil fuels,Fossil fuels,On-grid,2017,"18,892"
 Africa,Algeria,DZA,Total Non-Renewable,Fossil fuels,Fossil fuels,On-grid,2018,"20,480"
