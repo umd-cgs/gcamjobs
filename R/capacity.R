@@ -68,43 +68,43 @@ capacity <- function(fig_dir = NULL,
     filter(!is.na(region)) -> IRENA_capacity_clean
   #
   #
-  IRENA_capacity_clean %>%
-    left_join(IRENA.mapping %>%
-                select(-technology))%>%
-    group_by(region, year, var) %>%
-    summarise(value = sum(value, na.rm = T) * MW_to_GW) %>%
-    ungroup() %>%
-    mutate(scenario = ref_scenario) %>%
-    complete(nesting(region, year, var, value),
-             scenario = unique(scenarios),
-             fill = list(value =0)) %>%
-    select(scenario, year, value, region, var) -> IRENA_capacity_var
-
-
-  IRENA_capacity_clean %>%
-    left_join(IRENA.tech.mapping) %>%
-    filter(!technology %in% c("rooftop_pv", "wind_offshore")) %>%
-    select(region, technology, year, value) %>%
-    # scale RE values to RE:RE storage ratio
-    left_join(RE_ratio_2020) %>%
-    mutate(tech_storage = ifelse(technology=="PV", value * PV_ratio, NA),
-           tech_storage = ifelse(technology=="CSP", value * CSP_ratio, tech_storage),
-           tech_storage = ifelse(technology=="wind", value * Wind_ratio, tech_storage),
-           technology = paste0(technology, "_storage"),
-           value = tech_storage) %>%
-    select(-CSP_ratio, -PV_ratio, -Wind_ratio, -tech_storage) %>%
-    # add original IRENA data
-    bind_rows(IRENA_capacity_clean %>%
-                left_join(IRENA.tech.mapping) %>%
-                select(region, technology, year, value)) %>%
-    group_by(region, year, technology) %>%
-    summarise(value = sum(value, na.rm = T) * MW_to_GW) %>%
-    ungroup() %>%
-    mutate(scenario = ref_scenario) %>%
-    complete(nesting(region, year, technology, value),
-             scenario = unique(scenarios),
-             fill = list(value =0)) -> IRENA_capacity_tech
-
+  # IRENA_capacity_clean %>%
+  #   left_join(IRENA.mapping %>%
+  #               select(-technology))%>%
+  #   group_by(region, year, var) %>%
+  #   summarise(value = sum(value, na.rm = T) * MW_to_GW) %>%
+  #   ungroup() %>%
+  #   mutate(scenario = ref_scenario) %>%
+  #   complete(nesting(region, year, var, value),
+  #            scenario = unique(scenarios),
+  #            fill = list(value =0)) %>%
+  #   select(scenario, year, value, region, var) -> IRENA_capacity_var
+  #
+  #
+  # IRENA_capacity_clean %>%
+  #   left_join(IRENA.tech.mapping) %>%
+  #   filter(!technology %in% c("rooftop_pv", "wind_offshore")) %>%
+  #   select(region, technology, year, value) %>%
+  #   # scale RE values to RE:RE storage ratio
+  #   left_join(RE_ratio_2020) %>%
+  #   mutate(tech_storage = ifelse(technology=="PV", value * PV_ratio, NA),
+  #          tech_storage = ifelse(technology=="CSP", value * CSP_ratio, tech_storage),
+  #          tech_storage = ifelse(technology=="wind", value * Wind_ratio, tech_storage),
+  #          technology = paste0(technology, "_storage"),
+  #          value = tech_storage) %>%
+  #   select(-CSP_ratio, -PV_ratio, -Wind_ratio, -tech_storage) %>%
+  #   # add original IRENA data
+  #   bind_rows(IRENA_capacity_clean %>%
+  #               left_join(IRENA.tech.mapping) %>%
+  #               select(region, technology, year, value)) %>%
+  #   group_by(region, year, technology) %>%
+  #   summarise(value = sum(value, na.rm = T) * MW_to_GW) %>%
+  #   ungroup() %>%
+  #   mutate(scenario = ref_scenario) %>%
+  #   complete(nesting(region, year, technology, value),
+  #            scenario = unique(scenarios),
+  #            fill = list(value =0)) -> IRENA_capacity_tech
+  #
 
 
   #.........................
