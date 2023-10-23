@@ -1,4 +1,4 @@
 library(testthat)
-library(rtemplate)
+library(gcamjobs)
 
-test_check("rtemplate")
+test_check("gcamjobs")
