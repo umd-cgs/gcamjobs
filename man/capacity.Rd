@@ -27,7 +27,7 @@ capacity(
 number
 }
 \description{
-Function that sums two numbers
+Function that calculates capacity
 }
 \examples{
 \dontrun{

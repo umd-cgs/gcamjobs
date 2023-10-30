@@ -1,6 +1,6 @@
 #' capacity
 #'
-#' Function that sums two numbers
+#' Function that calculates capacity
 #'
 #' @param fig_dir Default = NULL, Output folder for figures and maps.
 #' @param prj_data Default = NULL, Gcam output data in "dat" format.
@@ -9,6 +9,10 @@
 #' @param ref_scenario Default = NULL
 #' @keywords sum
 #' @return number
+#' @import dplyr
+#' @import tidyr
+#' @import rgcam
+#' @import rlang
 #' @export
 #' @examples
 #' \dontrun{
@@ -28,7 +32,14 @@ capacity <- function(fig_dir = NULL,
   #.........................
 
   rlang::inform("Starting capacity...")
-  source(system.file("constants.R", package = "gcamjobs"), chdir = TRUE)
+
+
+  # Load the constants
+  const_file <- system.file("data", "constants.R", package = "gcamjobs")
+  if (length(const_file) == 0) {
+    stop("constants.R not found in package data")
+  }
+  source(const_file, chdir = TRUE)
 
   #.........................
   # Run Function

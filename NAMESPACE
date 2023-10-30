@@ -2,3 +2,7 @@
 
 export(capacity)
 export(example_function_sum)
+import(dplyr)
+import(rgcam)
+import(rlang)
+import(tidyr)
