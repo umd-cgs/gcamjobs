@@ -93,3 +93,19 @@
 #' }
 "RE_ratio_2020"
 
+
+
+#-------------------
+# elec_gen_map
+#-------------------
+
+#' elec_gen_map
+#'
+#' @source created by Teng
+#' @format R dataframe
+#' @examples
+#' \dontrun{
+#'  library(gcamjobs);
+#'  gcamjobs::elec_gen_map
+#' }
+"elec_gen_map"

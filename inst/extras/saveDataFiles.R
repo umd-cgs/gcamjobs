@@ -33,5 +33,7 @@ RE_ratio_2020 <- read.csv(paste0(saveDataFiles_folder,"/RE_Ratio_2020.csv"), che
   tibble::as_tibble()
 use_data(RE_ratio_2020, version=3, overwrite=T)
 
-
-
+# elec_gen_map
+elec_gen_map <- read.csv(paste0(saveDataFiles_folder,"/elec_gen_map_core.csv"), check.names = FALSE)%>%
+  tibble::as_tibble()
+use_data(elec_gen_map, version=3, overwrite=T)
