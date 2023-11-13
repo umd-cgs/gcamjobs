@@ -40,7 +40,17 @@ capacity <- function(fig_dir = NULL,
     stop("constants.R not found in package data")
   }
   source(const_file, chdir = TRUE)
-
+  #.........................
+  # Added Function
+  #.........................
+  gather_map <- function(df){
+    untouched_cols <- names(df) %>% .[!grepl("var", names(df))]
+    df %>%
+      gather(identifier, var, -untouched_cols) %>%
+      select(-identifier) %>%
+      filter(!is.na(var), var != "") %>%
+      return()
+  }
   #.........................
   # Run Function
   #.........................
@@ -116,7 +126,6 @@ select(-CSP_ratio, -PV_ratio, -Wind_ratio, -tech_storage) %>%
     complete(nesting(region, year, technology, value),
              scenario = unique(scenarios),
              fill = list(value =0)) -> IRENA_capacity_tech
-
   # ==============================================================================================
   # Capacity and investment
   # ==============================================================================================
@@ -299,6 +308,102 @@ select(-CSP_ratio, -PV_ratio, -Wind_ratio, -tech_storage) %>%
   #   ylab("Total capacity (GW)") +
   #   ggsave(paste0(fig_dir, "/elec_capacity_July23_tech.png"), width = 8, height = 5)
 
+
+  # ----------------------------------------------------------------------------------
+  # Capacity Additions
+  # ----------------------------------------------------------------------------------
+  # # calculate solar and wind additions separately by averaging the difference between 2020 and 2025 to help with the jump
+  # elec_capacity_tot_clean %>%
+  #   filter(year %in% c(2020, 2025),
+  #          technology %in% c("wind", "wind_storage", "wind_offshore", "PV",
+  #                            "PV_storage", "CSP", "CSP_storage", "rooftop_pv")) %>%
+  #   filter(scenario %in% BRI_scenarios) %>%
+  #   group_by(scenario, region, technology) %>%
+  #   mutate(value = (value[year==2025]-value[year==2020])/5,
+  #          value = ifelse(value < 0, 0, value),
+  #          var = gsub("Capacity", "Capacity Additions", var),
+  #          units = "GW/year") %>%
+  #   ungroup() %>%
+  #   filter(year == 2025) -> solarwind_addition_2025
+  #
+  # elec_capacity_tot_clean %>%
+  #   filter(year %in% c(2015, 2020),
+  #          technology %in% c("wind", "wind_storage", "wind_offshore", "PV",
+  #                            "PV_storage", "CSP", "CSP_storage", "rooftop_pv")) %>%
+  #   filter(scenario %in% BRI_scenarios) %>%
+  #   group_by(scenario, region, technology) %>%
+  #   mutate(value = (value[year==2020]-value[year==2015])/5,
+  #          var = gsub("Capacity", "Capacity Additions", var),
+  #          value = ifelse(value < 0, 0, value),
+  #          units = "GW/year") %>%
+  #   ungroup() %>%
+  #   filter(year == 2020) -> solarwind_addition_2020
+  #
+  #
+  # # calculate capacity additions
+  # getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
+  #   filter(!sector %in% c("electricity", "elect_td_bld")) %>%
+  #   separate(technology, into = c("technology", "vintage"), sep = ",") %>%
+  #   mutate(vintage = as.integer(sub("year=", "", vintage))) %>%
+  #   group_by(scenario, region, technology = subsector, vintage, year) %>%
+  #   summarise(value = sum(value, na.rm = T)) %>%
+  #   ungroup %>%
+  #   bind_rows(getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
+  #               filter(sector %in% c("electricity", "elect_td_bld")) %>%
+  #               separate(technology, into = c("technology", "vintage"), sep = ",") %>%
+  #               mutate(vintage = as.integer(sub("year=", "", vintage))) %>%
+  #               group_by(scenario, region, technology, vintage, year) %>%
+  #               summarise(value = sum(value, na.rm = T)) %>%
+  #               ungroup) %>%
+  #   filter(year == vintage, year > 2015,
+  #          scenario %in% BRI_scenarios) %>%
+  #   #filter out solar and wind values in 2020 and 2025
+  #   filter(!year %in% c(2020, 2025) |
+  #            !technology %in% c("PV", "PV_storage",
+  #                               "CSP", "CSP_storage", "wind", "rooftop_pv",
+  #                               "wind_offshore", "wind_storage")) %>%
+  #   group_by(scenario, region, technology, year) %>%
+  #   summarise(value = sum(value, na.rm = T)) %>%
+  #   ungroup %>%
+  #   left_join(elec_cf %>%
+  #               filter(technology != "coal (conv pul)") %>% # use GCAM cf for capacity additions
+  #               group_by(region, technology) %>%
+  #               mutate(cf = replace(cf, vintage < 2025, cf[vintage == 2025])) %>%
+  #               ungroup %>%
+  #               bind_rows(elec_cf %>%
+  #                           filter(technology == "coal (conv pul)")),
+  #             by = c("region", "technology", "year" = "vintage")) %>%
+  #   # use average annual additions
+  #   mutate(EJ = value / 5) %>%
+  #   conv_EJ_GW() %>%
+  #   group_by(scenario, region, technology, year) %>% #
+  #   summarise(GW = sum(gw, na.rm = T), EJ = sum(EJ, na.rm = T)) %>%
+  #   ungroup -> elec_capacity_add
+  #
+  # elec_capacity_add %>%
+  #   rename(value = GW) %>%
+  #   filter(!grepl("cogen", technology)) %>%
+  #   #       technology != "hydro") %>%
+  #   mutate(var = paste0("Capacity Additions|", technology),
+  #          units = "GW/year") %>%
+  #   bind_rows(solarwind_addition_2020, solarwind_addition_2025) %>%
+  #   select(long_columns, technology, units) ->
+  #   elec_capacity_add_clean
+  #
+  #
+  # # GGPLOT
+  # elec_capacity_add_clean %>%
+  #   filter(year %in% reporting_years) %>%
+  #   ggplot() +
+  #   geom_bar(aes(x = year, y = value, fill = technology), stat = "identity", size = 1) +
+  #   theme_bw() +
+  #   theme(axis.text.x = element_text(angle=90)) +
+  #   scale_x_continuous(breaks = seq(2010, 2100, by = 10), expand = c(0, 0)) +
+  #   ggtitle("Capacity Additions") +
+  #   facet_wrap(~scenario) +
+  #   ylab("GW") +
+  #   ggsave(paste0(fig_dir, "/capacity_additions_July23_tech.png"), width = 8, height = 5)
+  #
   #.........................
   # Saving outputs
   #.........................

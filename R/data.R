@@ -109,3 +109,65 @@
 #'  gcamjobs::elec_gen_map
 #' }
 "elec_gen_map"
+
+#-------------------
+# GCPT_capacity
+#-------------------
+
+#' GCPT_capacity
+#'
+#' @source created by Teng
+#' @format R dataframe
+#' @examples
+#' \dontrun{
+#'  library(gcamjobs);
+#'  gcamjobs::GCPT_capacity
+#' }
+"GCPT_capacity"
+
+
+#-------------------
+# iea_capacity
+#-------------------
+
+#' iea_capacity
+#'
+#' @source created by Teng
+#' @format R dataframe
+#' @examples
+#' \dontrun{
+#'  library(gcamjobs);
+#'  gcamjobs::iea_capacity
+#' }
+"iea_capacity"
+
+#-------------------
+# cf_rgn
+#-------------------
+
+#' cf_rgn
+#'
+#' @source created by Teng
+#' @format R dataframe
+#' @examples
+#' \dontrun{
+#'  library(gcamjobs);
+#'  gcamjobs::cf_rgn
+#' }
+"cf_rgn"
+
+
+#-------------------
+# cf_gcam
+#-------------------
+
+#' cf_gcam
+#'
+#' @source created by Teng
+#' @format R dataframe
+#' @examples
+#' \dontrun{
+#'  library(gcamjobs);
+#'  gcamjobs::cf_gcam
+#' }
+"cf_gcam"
